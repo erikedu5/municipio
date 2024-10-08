@@ -51,6 +51,12 @@ const logout = () => {
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
+                                <NavLink :href="route('publicationsInternal.index')" :active="route().current('publicationsInternal.index')">
+                                    Publicaciones
+                                </NavLink>
+                                <NavLink :href="route('offersInternal.index')" :active="route().current('offersInternal.index')">
+                                    Ofertas de trabajo
+                                </NavLink>
                             </div>
                         </div>
 
@@ -193,6 +199,12 @@ const logout = () => {
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('publicationsInternal.index')" :active="route().current('publicationsInternal.index')">
+                            Publicaciones
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('offersInternal.index')" :active="route().current('offersInternal.index')">
+                            Ofertas de trabajo
                         </ResponsiveNavLink>
                     </div>
 

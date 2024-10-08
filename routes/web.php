@@ -7,6 +7,8 @@ Route::get('/', [\App\Http\Controllers\PublicationController::class, 'index']);
 
 Route::resource('/publicationsInternal', \App\Http\Controllers\InternalPublicationController::class);
 
+Route::resource('/offersInternal', \App\Http\Controllers\OfferController::class);
+
 Route::get('/publications', [\App\Http\Controllers\PublicationController:: class, 'index']);
 
 Route::middleware([

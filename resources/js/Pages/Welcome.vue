@@ -73,8 +73,9 @@ function handleImageError() {
                            <h2 class="text-center text-2xl font-bold leading-7 text-white-100 sm:truncate sm:text-2xl sm:tracking-tight"> {{ publication.subtitle }} </h2>
                            <br>
                            <div v-html="publication.description" />
-                           <div v-for="image in publication.images" :key="image.id">
-                                <img src="{{ image.path }}" alt="">
+                           <br><br>
+                           <div class="gallery">
+                                <img v-for="(image, index) in publication.images" :key="index" :src="image" alt="Imagen" />
                            </div>
                         </div>
                     </div>
@@ -95,8 +96,9 @@ function handleImageError() {
                            <h2 class="text-center text-2xl font-bold leading-7 text-white-100 sm:truncate sm:text-2xl sm:tracking-tight"> {{ job.subtitle }} </h2>
                            <br>
                            <div v-html="job.description" />
-                           <div v-for="image in job.images" :key="image.id">
-                                <img src="{{ image.path }}" alt="">
+                           <br><br>
+                           <div class="gallery">
+                                <img v-for="(image, index) in job.images" :key="index" :src="image" alt="Imagen" />
                            </div>
                         </div>
                     </div>
@@ -110,3 +112,17 @@ function handleImageError() {
         </div>
     </div>
 </template>
+
+<style>
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gallery img {
+  max-width: 200px; /* Ajusta según tus necesidades */
+  max-height: 200px;
+  border: 1px solid #ccc;
+}
+</style>
