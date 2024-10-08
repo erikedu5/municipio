@@ -70,22 +70,6 @@ class OfferController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(String $brand_id)
-    {
-       /* $clients = Client::get();
-        $brand = Brand::find($brand_id);
-        $brand->status = $brand->status ? 1: 0;
-        $brand->client = $brand->client_id;
-        return Inertia::render('Brand/CreateBrand', [
-            'brand' => $brand,
-            'clients' => $clients,
-            'editable' => false
-        ]);*/
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(String $publication_id)

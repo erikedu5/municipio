@@ -7,7 +7,7 @@ import AppLayout from'@/Layouts/AppLayout.vue';
     import '@vuepic/vue-datepicker/dist/main.css';
     import { ref } from 'vue';
 
-    const props=defineProps({publicacion: Object});
+    const props=defineProps({publicacion: Object, editable: Boolean});
     const previews = ref(props.publicacion !== undefined ? props.publicacion.images: []);
 
     const form = useForm({
@@ -29,11 +29,9 @@ import AppLayout from'@/Layouts/AppLayout.vue';
     }
 
     const handleFileChange = (event) => {
-      const selectedFiles = Array.from(event.target.files);
-      form.images = selectedFiles;
-
-      // Generar previews
-      previews.value = selectedFiles.map(file => URL.createObjectURL(file));
+        const selectedFiles = Array.from(event.target.files);
+        form.images = selectedFiles;
+        previews.value = selectedFiles.map(file => URL.createObjectURL(file));
     };
 
     const removeImage = (index) => {
@@ -95,7 +93,7 @@ import AppLayout from'@/Layouts/AppLayout.vue';
                             <br>
 
                             <label class="block font-medium text-sm text-gray-700">Imagenes</label>
-                            <input type="file" @change="handleFileChange" multiple accept="image/*" />
+                            <input v-if="!props.editable" type="file" @change="handleFileChange" multiple accept="image/*" />
                             <br>
                             <br>
 
@@ -103,7 +101,7 @@ import AppLayout from'@/Layouts/AppLayout.vue';
                                 <div v-for="(image, index) in previews" :key="index">
                                     <img :src="image" alt="Preview" />
                                     <br>
-                                    <button  class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded
+                                    <button v-if="image.includes('blob')" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded
                                             hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700
                                             focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white
                                             dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"

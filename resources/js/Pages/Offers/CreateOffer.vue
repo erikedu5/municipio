@@ -7,7 +7,7 @@
     import '@vuepic/vue-datepicker/dist/main.css';
     import { ref } from 'vue';
 
-    const props=defineProps({offer: Object});
+    const props=defineProps({offer: Object, editable: Boolean});
     const previews = ref(props.offer !== undefined ? props.offer.images: []);
 
     const form = useForm({
@@ -95,7 +95,7 @@
                             <br>
 
                             <label class="block font-medium text-sm text-gray-700">Imagenes</label>
-                            <input type="file" @change="handleFileChange" multiple accept="image/*" />
+                            <input v-if="!props.editable"  type="file" @change="handleFileChange" multiple accept="image/*" />
                             <br>
                             <br>
 

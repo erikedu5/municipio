@@ -69,22 +69,6 @@ class InternalPublicationController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(String $brand_id)
-    {
-       /* $clients = Client::get();
-        $brand = Brand::find($brand_id);
-        $brand->status = $brand->status ? 1: 0;
-        $brand->client = $brand->client_id;
-        return Inertia::render('Brand/CreateBrand', [
-            'brand' => $brand,
-            'clients' => $clients,
-            'editable' => false
-        ]);*/
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(String $publication_id)
@@ -106,50 +90,23 @@ class InternalPublicationController extends Controller
      */
     public function update(Request $request)
     {
-       /* if (!empty($request->file('path_information_tax'))) {
-            $resume = $request->file('path_information_tax');
-            $resumeFileName = 'information_tax-'. $request->name. '.' . $resume->getClientOriginalExtension();
-
-            $filePath = Storage::disk('s3')->putFile(
-                $request->client.'/tax_information',
-                $resume,
-                $resumeFileName,
-                'public'
-            );
-        }
-
-        if (!empty($request->file('path_logo'))) {
-            $logo = $request->file('path_logo');
-            $logo_FileName = 'logo-'. $request->name. '.' . $logo->getClientOriginalExtension();
-
-            $logoPath = Storage::disk('s3')->putFile(
-                $request->client.'/logo',
-                $logo,
-                $logo_FileName,
-                'public'
-            );
-        }
+        dd($request);
 
         $updateArr =[
-            'name' => $request->name,
-            'rfc' => $request->rfc,
-            'latitud' => $request->latitud,
-            'longitud' => $request->longitud,
-            'locations_maps' => $request->locations_maps,
-            'path_information_tax' => isset($filePath) ? $filePath: $request->path_information_tax,
-            'brand_reach' => $request->brand_reach,
-            'primary_color' => $request->primary_color,
-            'secundary_color' => $request->secundary_color,
-            'path_logo' => isset($logoPath) ? $logoPath: $request->path_logo,
-            'status' => $request->status == 1 ? true: false
+            'title' => $request->title,
+            'subtitle' => $request->subtitle,
+            'description' => $request->description,
+            'startDate' => new Carbon($request->startDate),
+            'endDate' => new Carbon($request->endDate),
         ];
 
-        Brand::where('id', $request->id)
+        Publication::where('id', $request->id)
         ->orderBy('id')
         ->first()
         ->update($updateArr);
 
-        return redirect()->route('brands.index');*/
+
+        return redirect()->route('publicationsInternal.index');
     }
 
     /**
