@@ -190,3 +190,17 @@ function handleImageError() {
         </div>
     </div>
 </template>
+
+<style>
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gallery img {
+  max-width: 200px; /* Ajusta según tus necesidades */
+  max-height: 200px;
+  border: 1px solid #ccc;
+}
+</style>

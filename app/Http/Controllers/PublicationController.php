@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ImagesOffer;
 use App\Models\ImagesPublication;
 use App\Models\Offer;
 use App\Models\publication;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -15,14 +17,20 @@ class PublicationController extends Controller
         $publications = publication::where('startDate', '<=', Carbon::now())
         ->where('endDate', '>=', Carbon::now())->get();
         foreach($publications as $publication) {
-            $publication->images = ImagesPublication::where('publication_id', $publication->id)->get();
+            $images = ImagesPublication::where('publication_id', $publication->id)->get()->map(function($image) {
+                return Storage::url($image->path); // Genera la URL pública
+            });
+            $publication->images = $images;
         }
 
-        
+
         $offers = Offer::where('startDate', '<=', Carbon::now())
         ->where('endDate', '>=', Carbon::now())->get();
-        foreach($publications as $publication) {
-            $offers->images = ImagesPublication::where('publication_id', $publication->id)->get();
+        foreach($offers as $offer) {
+            $images = ImagesOffer::where('offer_id', $offer->id)->get()->map(function($image) {
+                return Storage::url($image->path); // Genera la URL pública
+            });
+            $offer->images = $images;
         }
 
         return Inertia::render('Welcome', [
