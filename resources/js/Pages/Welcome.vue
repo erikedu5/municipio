@@ -105,80 +105,66 @@ function handleImageError() {
                                 Comunicación social</h2>
                         </div>
                     </div>
-                    <div
-                        class="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                        <article class="bg-white shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] rounded-xl flex max-w-xl flex-col items-start p-3 justify-between dark:bg-slate-800">
-                            <figure class="md:flex bg-slate-100 rounded-xl">
-                                <img src="https://www.infobae.com/new-resizer/KwDxtmhsatlVQeMcpK8YsmMca-A=/992x558/filters:format(webp):quality(85)/cloudfront-us-east-1.images.arcpublishing.com/infobae/M3LW3577CBC7TO66WBUV6S477U.jpg" alt="noticia">
+                    <div class="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                        <article v-for="publication in publications" :key="publication.id"
+                            class="bg-white shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] rounded-xl flex max-w-xl flex-col items-start p-3 mb-4 justify-between dark:bg-slate-800">
+                            <figure v-for="image in publication.images" :key="image.id"
+                                class="md:flex bg-slate-100 rounded-xl overflow-hidden">
+                                <img :src="image" alt="noticia" class="w-full h-64 object-cover">
                             </figure>
                             <div class="flex items-center gap-x-2 text-xs my-2">
-                                <time datetime="2020-03-16" class="text-gray-500">Mar 16, 2020</time>
+                                <time datetime="2020-03-16" class="text-gray-500">{{ publication.startDate }} Mar 16, 2020 </time>
                             </div>
                             <div class="group relative">
                                 <h3
                                     class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
                                     <a href="#">
                                         <span class="absolute inset-0"></span>
-                                        Boost your conversion rate
+                                        {{ publication.title }}
+
                                     </a>
                                 </h3>
-                                <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Illo sint voluptas. Error
-                                    voluptates culpa
-                                    eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed
-                                    exercitationem
-                                    placeat consectetur nulla deserunt vel. Iusto corrupti dicta.</p>
+                                <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{{ publication.subtitle }}
+                                </p>
                             </div>
                         </article>
                     </div>
 
-
-                    <div v-for="publication in publications" :key="publication.id" class="grid gap-6 lg:gap-8">
-                        <div
-                            class="items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800">
-                            <h2
-                                class="text-center text-3xl font-bold leading-7 text-white-100 sm:truncate sm:text-3xl sm:tracking-tight">
-                                {{ publication.title }} </h2>
-                            <br>
-                            <h2
-                                class="text-center text-2xl font-bold leading-7 text-white-100 sm:truncate sm:text-2xl sm:tracking-tight">
-                                {{ publication.subtitle }} </h2>
-                            <br>
-                            <div v-html="publication.description" />
-                            <div v-for="image in publication.images" :key="image.id">
-                                <img src="{{ image.path }}" alt="">
-                            </div>
-                        </div>
-                    </div>
-
-                    <br>
                     <hr class="my-6">
-                    <br>
                     <div class="w-full grid gap-12 lg:gap-8 text-center">
                         <div
-                            class=" items-start gap-4 rounded-lg bg-white p-12 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800">
+                            class=" items-start gap-4 rounded-lg  p-12  ring-1 ring-white/[0.05] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800">
                             <h2
                                 class="text-3xl font-bold leading-7 text-white-100 sm:truncate sm:text-3xl sm:tracking-tight">
                                 Ofertas
                                 laborales</h2>
                         </div>
                     </div>
-                    <br>
-                    <div v-for="job in offers" :key="job.id" class="grid gap-6 lg:gap-8">
-                        <div
-                            class="items-start gap-4 rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-white/[0.05] lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800">
-                            <h2
-                                class="text-center text-3xl font-bold leading-7 text-white-100 sm:truncate sm:text-3xl sm:tracking-tight">
-                                {{ job.title }} </h2>
-                            <br>
-                            <h2
-                                class="text-center text-2xl font-bold leading-7 text-white-100 sm:truncate sm:text-2xl sm:tracking-tight">
-                                {{ job.subtitle }} </h2>
-                            <br>
-                            <div v-html="job.description" />
-                            <div v-for="image in job.images" :key="image.id">
-                                <img src="{{ image.path }}" alt="">
+
+                    <div class="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                        <article v-for="job in offers" :key="job.id"
+                            class="bg-white shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] rounded-xl flex max-w-xl flex-col items-start p-3 mb-4 justify-between dark:bg-slate-800">
+
+                            <div class="flex items-center gap-x-2 text-xs my-2">
+                                <time datetime="2020-03-16" class="text-gray-500">Publicada el: {{ job.startDate }} </time>
                             </div>
-                        </div>
+
+                            <div class="group relative">
+                                <h2
+                                    class="mt-3 text-lg font-semibold leading-6 mb-3 text-gray-900 group-hover:text-gray-600">
+                                    <a href="#">
+                                        <span class="absolute inset-0"></span>
+                                        {{ job.title }}
+
+                                    </a>
+                                </h2>
+                                <figure v-for="image in job.images" :key="image.id"
+                                    class="md:flex bg-slate-100 rounded-xl overflow-hidden">
+                                    <img :src="image" alt="noticia" class="w-full h-64 object-cover">
+                                </figure>
+                                <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{{ job.subtitle }}</p>
+                            </div>
+                        </article>
                     </div>
                     <hr class="my-6">
                 </main>
@@ -193,14 +179,15 @@ function handleImageError() {
 
 <style>
 .gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .gallery img {
-  max-width: 200px; /* Ajusta según tus necesidades */
-  max-height: 200px;
-  border: 1px solid #ccc;
+    max-width: 200px;
+    /* Ajusta según tus necesidades */
+    max-height: 200px;
+    border: 1px solid #ccc;
 }
 </style>

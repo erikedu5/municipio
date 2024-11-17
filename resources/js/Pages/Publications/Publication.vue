@@ -8,7 +8,8 @@
         publications: {
             type: Array,
             default: []
-        }
+        },
+        pagination: Number
     });
 
     const q = ref('');
