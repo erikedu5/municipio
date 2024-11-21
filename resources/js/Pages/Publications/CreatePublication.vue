@@ -5,20 +5,32 @@ import AppLayout from'@/Layouts/AppLayout.vue';
     import{ useForm }from'@inertiajs/vue3';
     import VueDatePicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css';
-    import { ref } from 'vue';
+    import { ref, watch  } from 'vue';
+
+    import  QuillEditor  from '@/Components/QuillEditor.vue';
 
     const props=defineProps({publicacion: Object, editable: Boolean});
     const previews = ref(props.publicacion !== undefined ? props.publicacion.images: []);
 
+
+    // Formulario inicial
     const form = useForm({
-        id: props.publicacion !== undefined ? props.publicacion.id: null,
-        title: props.publicacion !== undefined ? props.publicacion.title : '',
-        subtitle: props.publicacion !== undefined ? props.publicacion.subtitle : '',
-        description: props.publicacion !== undefined ? props.publicacion.description : '',
-        startDate: props.publicacion !== undefined ? new Date(props.publicacion.startDate) : new Date(),
-        endDate: props.publicacion !== undefined ? new Date(props.publicacion.endDate) : new Date(),
-        images: props.publicacion !== undefined ? props.publicacion.images :[]
+    id: props.publicacion ? props.publicacion.id : null,
+    title: props.publicacion ? props.publicacion.title : '',
+    subtitle: props.publicacion ? props.publicacion.subtitle : '',
+    description: props.publicacion ? props.publicacion.description : '',
+    startDate: props.publicacion ? new Date(props.publicacion.startDate) : new Date(),
+    endDate: props.publicacion ? new Date(props.publicacion.endDate) : new Date(),
+    images: props.publicacion ? props.publicacion.images : [],
     });
+
+    // Actualizar descripción si los datos llegan después
+    watch(
+    () => props.publicacion?.description,
+    (newValue) => {
+        form.description = newValue || ''; // Asegurarse de que el editor esté sincronizado
+    }
+    );
 
     const submit = () => {
         if (props.publicacion == null) {
@@ -40,6 +52,8 @@ import AppLayout from'@/Layouts/AppLayout.vue';
       previews.value.splice(index, 1);
       form.images.splice(index, 1);
     };
+
+    
 
 </script>
 
@@ -74,13 +88,16 @@ import AppLayout from'@/Layouts/AppLayout.vue';
                             <br>
 
                             <label class="block font-medium text-sm text-gray-700">Descripción</label>
-                            <textarea
+                            <!-- <textarea
                                 class="form-input w-full rounded-md shadow-sm"
                                 v-model="form.description"
                                 rows="9">
                             </textarea>
                             <br>
-                            <br>
+                            <br> -->
+                            <div v-html="form.description"></div>
+                            <QuillEditor v-model="form.description" />
+                            <br><br>
 
                             <label class="block font-medium text-sm text-gray-700">Fecha de inicio</label>
                             <VueDatePicker v-model="form.startDate" :min-date="new Date()"></VueDatePicker>

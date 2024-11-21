@@ -62,7 +62,7 @@
                                     <th>Id</th>
                                     <th>Título</th>
                                     <th>Subtítulo</th>
-                                    <th>Descripción</th>
+                                    <!-- <th>Descripción</th> -->
                                     <th>Fecha de inicio de la publicación</th>
                                     <th>Fecha de fin de la publicación</th>
                                     <th></th>
@@ -73,7 +73,8 @@
                                         <td class="px-4 py-2"> {{ publication.id }}</td>
                                         <td class="px-4 py-2"> {{ publication.title }} </td>
                                         <td class="px-4 py-2"> {{ publication.subtitle }} </td>
-                                        <td class="px-4 py-2"> {{ publication.description }} </td>
+                                        <!-- <td><div v-html="publication.description"></div></td> -->
+                                        <!-- <td class="px-4 py-2"> {{ publication.description }} </td> -->
                                         <td class="px-4 py-2"> {{ publication.startDate }} </td>
                                         <td class="px-4 py-2"> {{ publication.endDate }} </td>
                                         <td class="px-4 py-2">
