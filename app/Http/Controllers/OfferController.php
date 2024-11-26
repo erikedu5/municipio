@@ -17,8 +17,7 @@ class OfferController extends Controller
      */
     public function index(Request $request)
     {
-        $offers =  Offer::where('startDate', '>=', Carbon::now())
-            ->latest()->paginate(env('PAGINATION'));
+        $offers =  Offer::latest()->paginate(env('PAGINATION'));
 
         return Inertia::render('Offers/Offer', [
             'offers' => $offers
