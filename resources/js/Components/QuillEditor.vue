@@ -1,73 +1,66 @@
 <template>
-    <div>
-        <!-- Contenedor del editor -->
-        <div id="editor" style="min-height: 150px;"></div>
+    <div class="quill-editor">
+      <div ref="editor" class="quill-container"></div>
     </div>
 </template>
 
 <script>
-import { onMounted, ref, watch, nextTick } from 'vue';
-import Quill from 'quill';
-import 'quill/dist/quill.snow.css';
+  import { ref, onMounted, watch } from 'vue'
+  import Quill from 'quill'
+  import 'quill/dist/quill.snow.css' // Estilos predeterminados de Quill
 
-export default {
+  export default {
     name: 'QuillEditor',
     props: {
-        modelValue: {
-            type: String,
-            default: '',
-        },
+      modelValue: {
+        type: String,
+        default: ''
+      }
     },
-    emits: ['update:modelValue'],
     setup(props, { emit }) {
-        const editor = ref(null);
+      const editor = ref(null)
+      const quillInstance = ref(null)
 
-        onMounted(() => {
-            const editorContainer = document.querySelector('#editor');
+      // Inicializamos Quill al montar el componente
+      onMounted(() => {
+        quillInstance.value = new Quill(editor.value, {
+          theme: 'snow',
+          modules: {
+            toolbar: [
+              [{ header: '1' }, { header: '2' }, { font: [] }],
+              [{ list: 'ordered' }, { list: 'bullet' }],
+              ['bold', 'italic', 'underline'],
+              ['link', 'image'],
+              [{ align: [] }],
+              ['blockquote', 'code-block'],
+            ]
+          }
+        })
 
-            if (!editorContainer) {
-                console.error('El contenedor #editor no está disponible.');
-                return;
-            }
+        // Sincronizamos el contenido del editor con el prop `modelValue`
+        quillInstance.value.root.innerHTML = props.modelValue
 
-            // Inicializar Quill
-            editor.value = new Quill('#editor', {
-                debug: 'info',
-                modules: {
-                    toolbar: true,
-                },
-                placeholder: 'Compose an epic...',
-                theme: 'snow'
-            });
+        // Observamos los cambios en Quill y emitimos el valor actualizado al padre
+        quillInstance.value.on('text-change', () => {
+          const content = quillInstance.value.root.innerHTML
+          emit('update:modelValue', content)
+        })
+      })
 
-            // // Insertar contenido inicial válido
-            // const initialContent = props.modelValue || '<p><br></p>'; // Contenido seguro
-            // editor.value.clipboard.dangerouslyPasteHTML(initialContent);
+      // Verificamos si el contenido cambia desde el padre
+      watch(() => props.modelValue, (newValue) => {
+        if (quillInstance.value && newValue !== quillInstance.value.root.innerHTML) {
+          quillInstance.value.root.innerHTML = newValue
+        }
+      })
 
-            // Escuchar cambios y emitirlos
-            editor.value.on('text-change', () => {
-                emit('update:modelValue', editor.value.root.innerHTML);
-            });
+      return { editor }
+    }
+  }
+  </script>
 
-            // Depurar cambios de selección
-            // editor.value.on('selection-change', (range) => {
-            //     console.log('Selection change:', range);
-            //     if (!range) {
-            //         console.warn('Selección inválida detectada.');
-            //     }
-            // });
-        });
-
-        // Actualizar contenido cuando `modelValue` cambie externamente
-        watch(() => props.modelValue, (newValue) => {
-            if (editor.value && editor.value.root.innerHTML !== newValue) {
-                editor.value.clipboard.dangerouslyPasteHTML(newValue || '<p><br></p>');
-            }
-        });
-
-        return {
-            editor,
-        };
-    },
-};
-</script>
+  <style scoped>
+  .quill-container {
+    min-height: 300px;
+  }
+</style>

@@ -6,6 +6,7 @@
     import VueDatePicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css';
     import { ref } from 'vue';
+    import  QuillEditor  from '@/Components/QuillEditor.vue';
 
     const props=defineProps({offer: Object, editable: Boolean});
     const previews = ref(props.offer !== undefined ? props.offer.images: []);
@@ -76,13 +77,8 @@
                             <br>
 
                             <label class="block font-medium text-sm text-gray-700">Descripción</label>
-                            <textarea
-                                class="form-input w-full rounded-md shadow-sm"
-                                v-model="form.description"
-                                rows="9">
-                            </textarea>
-                            <br>
-                            <br>
+                            <QuillEditor class="pb-8 pr-6 w-full" contentType="html" v-model="form.description" theme="snow" />
+
 
                             <label class="block font-medium text-sm text-gray-700">Fecha de inicio</label>
                             <VueDatePicker v-model="form.startDate" :min-date="new Date()"></VueDatePicker>

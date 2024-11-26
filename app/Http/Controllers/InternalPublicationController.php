@@ -16,8 +16,7 @@ class InternalPublicationController extends Controller
      */
     public function index(Request $request)
     {
-        $publications =  Publication::where('startDate', '>=', Carbon::now())
-            ->latest()->paginate(env('PAGINATION'));
+        $publications =  Publication::latest()->paginate(env('PAGINATION'));
 
         return Inertia::render('Publications/Publication', [
             'publications' => $publications
@@ -90,8 +89,6 @@ class InternalPublicationController extends Controller
      */
     public function update(Request $request)
     {
-        dd($request);
-
         $updateArr =[
             'title' => $request->title,
             'subtitle' => $request->subtitle,
