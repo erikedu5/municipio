@@ -54,14 +54,16 @@ class OfferController extends Controller
         ]);
 
         if ($request->hasFile('images')) {
+            $first = true;
             foreach ($request->file('images') as $image) {
                 // Guarda la imagen en el disco y almacena la ruta
                 $path = $image->store('images', 'public');
                 ImagesOffer::create([
                     'path' => $path,
-                    'main_image' => false,
+                    'main_image' => $first,
                     'offer_id' => $bandsaved->id
                 ]);
+                $first = false;
             }
         }
 
@@ -90,50 +92,21 @@ class OfferController extends Controller
      */
     public function update(Request $request)
     {
-       /* if (!empty($request->file('path_information_tax'))) {
-            $resume = $request->file('path_information_tax');
-            $resumeFileName = 'information_tax-'. $request->name. '.' . $resume->getClientOriginalExtension();
-
-            $filePath = Storage::disk('s3')->putFile(
-                $request->client.'/tax_information',
-                $resume,
-                $resumeFileName,
-                'public'
-            );
-        }
-
-        if (!empty($request->file('path_logo'))) {
-            $logo = $request->file('path_logo');
-            $logo_FileName = 'logo-'. $request->name. '.' . $logo->getClientOriginalExtension();
-
-            $logoPath = Storage::disk('s3')->putFile(
-                $request->client.'/logo',
-                $logo,
-                $logo_FileName,
-                'public'
-            );
-        }
-
         $updateArr =[
-            'name' => $request->name,
-            'rfc' => $request->rfc,
-            'latitud' => $request->latitud,
-            'longitud' => $request->longitud,
-            'locations_maps' => $request->locations_maps,
-            'path_information_tax' => isset($filePath) ? $filePath: $request->path_information_tax,
-            'brand_reach' => $request->brand_reach,
-            'primary_color' => $request->primary_color,
-            'secundary_color' => $request->secundary_color,
-            'path_logo' => isset($logoPath) ? $logoPath: $request->path_logo,
-            'status' => $request->status == 1 ? true: false
+            'title' => $request->title,
+            'subtitle' => $request->subtitle,
+            'description' => $request->description,
+            'startDate' => new Carbon($request->startDate),
+            'endDate' => new Carbon($request->endDate),
         ];
 
-        Brand::where('id', $request->id)
+        Offer::where('id', $request->id)
         ->orderBy('id')
         ->first()
         ->update($updateArr);
 
-        return redirect()->route('brands.index');*/
+
+        return redirect()->route('offersInternal.index');
     }
 
     /**
