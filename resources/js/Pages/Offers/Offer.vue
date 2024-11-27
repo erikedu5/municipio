@@ -61,7 +61,6 @@
                                     <th>Id</th>
                                     <th>Título</th>
                                     <th>Subtítulo</th>
-                                    <th>Descripción</th>
                                     <th>Fecha de inicio de la publicación</th>
                                     <th>Fecha de fin de la publicación</th>
                                     <th></th>
@@ -72,7 +71,6 @@
                                         <td class="px-4 py-2"> {{ offer.id }}</td>
                                         <td class="px-4 py-2"> {{ offer.title }} </td>
                                         <td class="px-4 py-2"> {{ offer.subtitle }} </td>
-                                        <td class="px-4 py-2"> {{ offer.description }} </td>
                                         <td class="px-4 py-2"> {{ offer.startDate }} </td>
                                         <td class="px-4 py-2"> {{ offer.endDate }} </td>
                                         <td class="px-4 py-2">
