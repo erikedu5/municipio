@@ -1,30 +1,39 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+    import { Head, Link } from '@inertiajs/vue3';
+    import 'vue3-carousel/dist/carousel.css'
+    import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+    import { computed } from 'vue';
 
-defineProps({
-    canLogin: {
-        type: Boolean,
-    },
-    canRegister: {
-        type: Boolean,
-    },
-    publications: {
-        type: Array,
-        default: []
-    },
-    offers: {
-        type: Array,
-        default: []
+    defineProps({
+        canLogin: {
+            type: Boolean,
+        },
+        canRegister: {
+            type: Boolean,
+        },
+        publications: {
+            type: Array,
+            default: []
+        },
+        offers: {
+            type: Array,
+            default: []
+        }
+
+    });
+
+    const config = {
+        autoplay: 2000,
+        wrapAround: true,
+        pauseAutoplayOnHover: true,
+    };
+
+    function handleImageError() {
+        document.getElementById('screenshot-container')?.classList.add('!hidden');
+        document.getElementById('docs-card')?.classList.add('!row-span-1');
+        document.getElementById('docs-card-content')?.classList.add('!flex-row');
+        document.getElementById('background')?.classList.add('!hidden');
     }
-
-});
-
-function handleImageError() {
-    document.getElementById('screenshot-container')?.classList.add('!hidden');
-    document.getElementById('docs-card')?.classList.add('!row-span-1');
-    document.getElementById('docs-card-content')?.classList.add('!flex-row');
-    document.getElementById('background')?.classList.add('!hidden');
-}
 </script>
 
 <template>
@@ -37,8 +46,8 @@ function handleImageError() {
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                 <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
                     <div class="flex lg:justify-center lg:col-start-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="200"
-                            zoomAndPan="magnify" viewBox="0 0 810 809.999993" height="300"
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="150"
+                            zoomAndPan="magnify" viewBox="0 0 810 809.999993" height="200"
                             preserveAspectRatio="xMidYMid meet" version="1.0">
                             <defs>
                                 <filter x="0%" y="0%" width="10px" height="15px" id="1d7bb1033c">
@@ -108,10 +117,16 @@ function handleImageError() {
                     <div class="mx-auto mt-5 grid max-w-2xl grid-cols-1 gap-x-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                         <article v-for="publication in publications" :key="publication.id"
                             class="bg-white shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] rounded-xl flex max-w-xl flex-col items-start p-3 mb-4 justify-between dark:bg-slate-800">
-                            <figure v-for="image in publication.images" :key="image.id"
-                                class="md:flex bg-slate-100 rounded-xl overflow-hidden">
-                                <img :src="image" alt="noticia" class="w-full h-64 object-cover">
-                            </figure>
+                            <Carousel v-bind="config">
+                                <Slide v-for="image in publication.images" :key="image.id">
+                                    <img :src="image" alt="noticia" class="w-full h-64 object-cover">
+                                </Slide>
+
+                                <template #addons>
+                                <Navigation />
+                                <Pagination />
+                                </template>
+                            </Carousel>
                             <div class="flex items-center gap-x-2 text-xs my-2">
                                 <time datetime="2020-03-16" class="text-gray-500">{{ publication.startDate }} Mar 16, 2020 </time>
                             </div>
@@ -158,10 +173,16 @@ function handleImageError() {
 
                                     </a>
                                 </h2>
-                                <figure v-for="image in job.images" :key="image.id"
-                                    class="md:flex bg-slate-100 rounded-xl overflow-hidden">
-                                    <img :src="image" alt="noticia" class="w-full h-64 object-cover">
-                                </figure>
+                                <Carousel v-bind="config">
+                                    <Slide v-for="image in job.images" :key="image.id">
+                                        <img :src="image" alt="noticia" class="w-full h-64 object-cover">
+                                    </Slide>
+
+                                    <template #addons>
+                                    <Navigation />
+                                    <Pagination />
+                                    </template>
+                                </Carousel>
                                 <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{{ job.subtitle }}</p>
                             </div>
                         </article>
