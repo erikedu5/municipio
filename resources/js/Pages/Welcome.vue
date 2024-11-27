@@ -128,7 +128,7 @@
                                 </template>
                             </Carousel>
                             <div class="flex items-center gap-x-2 text-xs my-2">
-                                <time datetime="2020-03-16" class="text-gray-500">{{ publication.startDate }} Mar 16, 2020 </time>
+                                <time datetime="2020-03-16" class="text-gray-500">{{ publication.startDate }} </time>
                             </div>
                             <div class="group relative">
                                 <h3
