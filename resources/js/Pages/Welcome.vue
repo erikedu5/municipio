@@ -3,6 +3,8 @@
     import 'vue3-carousel/dist/carousel.css'
     import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
     import { computed } from 'vue';
+    import moment from 'moment';
+    
 
     defineProps({
         canLogin: {
@@ -128,7 +130,7 @@
                                 </template>
                             </Carousel>
                             <div class="flex items-center gap-x-2 text-xs my-2">
-                                <time datetime="2020-03-16" class="text-gray-500">{{ publication.startDate }} </time>
+                                <strong><time datetime="2020-03-16" class="text-gray-500">{{ moment(publication.startDate, 'YYYY-MM-DD').format("DD MMM, YYYY") }} </time></strong>
                             </div>
                             <div class="group relative">
                                 <h3
@@ -161,7 +163,7 @@
                             class="bg-white shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] rounded-xl flex max-w-xl flex-col items-start p-3 mb-4 justify-between dark:bg-slate-800">
 
                             <div class="flex items-center gap-x-2 text-xs my-2">
-                                <time datetime="2020-03-16" class="text-gray-500">Publicada el: {{ job.startDate }} </time>
+                                <strong><time datetime="2020-03-16" class="text-gray-500">Publicada el: {{ moment(job.startDate, "YYYY MM DD").format("DD MMM, YYYY") }} </time></strong>
                             </div>
 
                             <div class="group relative">
