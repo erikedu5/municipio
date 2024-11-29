@@ -13,6 +13,20 @@ use Inertia\Inertia;
 
 class PublicationController extends Controller
 {
+
+    public function Entry(String $pubicationId) {
+        $publication = Publication::find($pubicationId);
+        $images = ImagesPublication::Where("publication_id", $publication->id)->get()->map(function($image) {
+            return Storage::url($image->path);
+        });
+        $publication->images = $images;
+
+        return Inertia::render('Publications/Entry', [
+            'publication' => $publication,
+        ]);
+
+    }
+
    public function Index() {
         $publications = publication::where('startDate', '<=', Carbon::now())
         ->where('endDate', '>=', Carbon::now())->get();

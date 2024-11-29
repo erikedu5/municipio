@@ -15,6 +15,19 @@ class OfferController extends Controller
        /**
      * Display a listing of the resource.
      */
+
+    public function Oferta(String $offer_id) {
+        $offer = Offer::find($offer_id);
+        $images = ImagesOffer::Where("offer_id", $offer->id)->get()->map(function($image){
+            return FacadesStorage::url($image->path);
+        });
+
+        $offer->images = $images;
+
+        return Inertia::render("Offers/Oferta",[
+            'offer' => $offer,
+        ]);
+    }
     public function index(Request $request)
     {
         $offers =  Offer::latest()->paginate(env('PAGINATION'));
